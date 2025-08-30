@@ -43,6 +43,12 @@ app.add_middleware(
 async def root():
     return {"message": "🚀 FastAPI server is running fine"}
 
+@app.get("/vercel-log-test")
+async def log_test():
+    print("Vercel log test route hit!")
+    return {"message": "Vercel logging works!"}
+
+
 
 # Routes
 app.include_router(auth.router, prefix="/api/vv/auth", tags=["Auth"])
