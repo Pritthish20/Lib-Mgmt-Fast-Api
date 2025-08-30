@@ -5,45 +5,40 @@ from app.models.book import Book
 from app.models.transaction import Transaction
 from app.core.config import settings
 
-# Global Motor client + init flag
+# Global Mongo client
 client: motor.motor_asyncio.AsyncIOMotorClient | None = None
-_beanie_initialized: bool = False
 
 
 async def connect_db():
     """
-    Lazy-init: Connect to MongoDB and initialize Beanie once per container.
+    Connect to MongoDB (Atlas/Local) and init Beanie once at startup.
     """
-    global client, _beanie_initialized
-    if _beanie_initialized:
-        # Already initialized in this container
+    global client
+    if client:  # Already connected (avoid re-init in warm starts)
+        print("⚡ Mongo already initialized, skipping re-init")
         return
 
     try:
-        print("🔌 [DB] Connecting to MongoDB...")
+        print("🔌 Connecting to MongoDB...")
         client = motor.motor_asyncio.AsyncIOMotorClient(settings.MONGO_URI)
         db = client[settings.MONGO_DB]
 
-        # Register Beanie models (only once per container)
         await init_beanie(
             database=db,
             document_models=[User, Book, Transaction]
         )
 
-        _beanie_initialized = True
-        print("✅ [DB] Successfully connected & Beanie initialized")
-
+        print("✅ MongoDB connection established + Beanie initialized")
     except Exception as e:
-        print(f"❌ [DB] Connection Error: {e}")
+        print(f"❌ MongoDB Connection Error: {e}")
         raise e
 
 
 async def disconnect_db():
     """
-    Optional cleanup — usually not needed in serverless (Vercel kills the container).
+    Disconnect MongoDB cleanly on app shutdown.
     """
-    global client, _beanie_initialized
+    global client
     if client:
         client.close()
-        _beanie_initialized = False
-        print("🛑 [DB] MongoDB connection closed")
+        print("🛑 MongoDB connection closed")
