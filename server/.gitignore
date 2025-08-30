@@ -1,0 +1,55 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+venv/
+.env
+.env.*
+
+# VSCode IDE files
+.vscode/
+
+# MacOS system files
+.DS_Store
+
+# Pytest, coverage, and test artifacts
+.coverage
+htmlcov/
+*.log
+
+# pip metadata
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# MyPy and other type-check artifacts
+.mypy_cache/
+.dmypy.json
+.pyre/
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Vercel deployment/artifacts
+.vercel
+
+# Node.js serverless deployments (if mixing JS/TS)
+node_modules/
+*.tsbuildinfo
+
+# Pydantic compiled schemas
+__pydantic_cache__/
+
+# Miscellaneous
+*.sqlite3
+*.db
+*.bak
