@@ -1,115 +1,165 @@
+# Library Management Web App
 
-# **Lib-mgmt Web App**
+A full-stack MERN project for Library Management. The app includes features such as adding, updating & managing books, state management, and secure token-based authentication.
 
-A full-stack MERN project for Library Mangaement. The app includes features such as adding, updating & managing books, state management, and secure token-based authentication.
+## Table of Contents
 
----
+- [About the Project](#about-the-project)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Demo](#demo)
+- [Screenshots](#screenshots)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contact](#contact)
 
-## **Table of Contents**
+## About the Project
 
-1. [About the Project](#about-the-project)
-2. [Features](#features)
-3. [Tech Stack](#tech-stack)
-4. [Demo](#demo)
-5. [Screenshots](#screenshots)
-6. [Installation](#installation)
-7. [Usage](#usage)
-9. [Contact](#contact)
+This project is designed to help users borrow, return books and manage books for librarians. It offers features like search/filter books, borrow/return book, and user authentication. The app is built using the MERN stack and provides a responsive user interface with dynamic state management.
 
----
+## Features
 
-## **About the Project**
+- 📚 Search & Filter for Books
+- 📖 Borrow and return books (transactions) for users
+- 🔐 Token-based authentication for secure user sessions
+- 👨‍💼 Admin dashboard to track transactions and books
+- 🔄 State management for seamless user experience
+- 📱 Responsive design for all major screen sizes
 
-This project is designed to help users borrow, return books and manage books for librarians. It offers features like search/filter books, borrow/return book , and user authentication. The app is built using the MERN stack and provides a responsive user interface with dynamic state management.
+## Tech Stack
 
----
+### Frontend
+- **React.js** - UI Framework
+- **Tailwind CSS** - Styling
+- **Redux Toolkit** - Global state management and seamless UI updates
+- **Axios** - HTTP client for API communication
 
-## **Features**
+### Backend
+- **FastAPI** - Python asynchronous web framework
+- **MongoDB** - NoSQL Database
+- **Motor** - Async MongoDB driver
+- **Beanie ODM** - Document modeling
 
-- Search & Filer for Books.
-- Borrow and return books (transactions) for users.
-- Token-based authentication for secure user sessions.
-- Admin dashboard to track transactions and books.
-- State management for seamless user experience.
-- Responsive design for all major screen sizes.
+### Authentication
+- **JWT** - Secure token-based authentication
 
----
+## Demo
 
-## **Tech Stack**
+[Watch the Demo Video](https://drive.google.com/file/d/1GPH_wQDZ0MXNE2CToucaeYjgGRW4G61r/view?usp=sharing)
 
-- **Frontend**: React.js, Tailwind CSS
-- **Backend**: Node.js, Express.js
-- **Database**: MongoDB
-- **State Management**: Redux
+## Screenshots
 
----
+### Homepage
+![Homepage Screenshot](assets/lib-mgmt%201.png)
 
-## **Demo**
+### Admin Dashboard
+![Admin Dashboard Screenshot](assets/lib-mgmt%202.png)
 
-[Watch the Demo Video](https://drive.google.com/file/d/1GPH_wQDZ0MXNE2CToucaeYjgGRW4G61r/view?usp=sharing)  
-<!-- (*Replace `#` with the link to your demo video*) -->
+### Borrowed Books
+![Borrowed Books Screenshot](assets/lib-mgmt%203.png)
 
----
+## Installation
 
-## **Screenshots**
+### Prerequisites
+- Node.js (v18 or higher)
+- Python (v3.9 or higher)
+- MongoDB
 
-#### Homepage
-![Homepage Screenshot](/assets//lib-mgmt%201.png)  
+### Setup Instructions
 
-#### Admin Dashboard
-![Product Details Page Screenshot](/assets/lib-mgmt%202.png)  
-
-#### Borrowed Books
-![Price Tracking Feature Screenshot](/assets/lib-mgmt%203.png)  
-<!-- (*Replace `#` with the URLs or paths to your screenshots in the repository*) -->
-
----
-
-## **Installation**
-
-1. Clone the repository:
+1. **Clone the repository:**
    ```bash
    git clone https://github.com/Pritthish20/LibraryManangement.git
    ```
-2. Navigate to the project directory:
+
+2. **Navigate to the project directory:**
    ```bash
    cd LibraryManangement
    ```
-3. Install dependencies for both frontend and backend:
+
+3. **Install frontend dependencies:**
    ```bash
    cd client
    npm install
-   cd server
-   npm install
    ```
-4. Create an `.env` file in the `server` directory and configure the environment variables:
-   ```plaintext
+
+4. **Install backend dependencies:**
+   ```bash
+   cd ../server
+   pip install -r requirements.txt
+   ```
+
+5. **Configure environment variables:**
+   
+   Create a `.env` file in the `server` directory:
+   ```env
    MONGO_URI=your_mongodb_connection_string
    JWT_SECRET=your_secret_key
    ```
-5. Start the development servers:
+
+6. **Start the development servers:**
+   
+   **Frontend:**
    ```bash
    cd client
    npm run dev
+   ```
+   
+   **Backend:**
+   ```bash
    cd server
-   npm run server
+   uvicorn app.main:app --reload
    ```
 
----
+## Usage
 
-## **Usage**
+### For Users
+- Search and filter books by title, author, or genre
+- Borrow books and track borrowed items
+- Return books and view transaction history
+- Register and log in for a personalized experience
 
-- Search and filter books.
-- Borrow and return books.
-- Log in or register for a personalized experience.
-- Managing Books for Librarians.
+### For Librarians
+- Add new books to the library catalog
+- Update book information and availability
+- Manage user transactions
+- View comprehensive admin dashboard with analytics
 
----
+## API Endpoints
 
-## **Contact**
+### Authentication
+- `POST /auth/register` - User registration
+- `POST /auth/login` - User login
 
-- **Your Name**: [Email](mailto:pritthishsarkar_ep21b11_18@dtu.ac.in)
-- **GitHub**: [Pritthish20](https://github.com/Pritthish20)
+### Books
+- `GET /books` - Get all books
+- `POST /books` - Add new book (Admin only)
+- `PUT /books/{id}` - Update book (Admin only)
+- `DELETE /books/{id}` - Delete book (Admin only)
+
+### Transactions
+- `POST /transactions/borrow` - Borrow a book
+- `POST /transactions/return` - Return a book
+- `GET /transactions/user/{user_id}` - Get user transactions
+
+<!-- ## Contributing
+
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. -->
+
+## Contact
+
+**Pritthish Sarkar**
+- Email: [pritthishps20@gmail.com](mailto:pritthishps20@gmail.com)
+- GitHub: [@Pritthish20](https://github.com/Pritthish20)
+<!-- - Project Link: [https://github.com/Pritthish20/LibraryManangement](https://github.com/Pritthish20/LibraryManangement) -->
 
 ---
 
