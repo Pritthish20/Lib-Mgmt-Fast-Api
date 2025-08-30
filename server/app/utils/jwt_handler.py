@@ -16,7 +16,7 @@ def create_token(response: Response, user_id: str) -> str:
     response.set_cookie(
         key="jwt",
         value=token,
-        httponly=True,   # uncomment for better security
+        # httponly=True,   # uncomment for better security
         secure=True,
         samesite="none",
         max_age=ACCESS_TOKEN_EXPIRE_HOURS * 60 * 60,
