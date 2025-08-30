@@ -1,4 +1,3 @@
-from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -8,26 +7,23 @@ from app.routes import auth, book, transaction
 from app.middlewares.logger import logger_middlewares
 
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    print("Lifespan: Starting DB connection...")
-    try:
-        await connect_db()
-        print("✅ Lifespan: DB connection succeeded.")
-    except Exception as e:
-        print(f"❌ Lifespan: DB connection failed with error: {e}")
-        import traceback
-        print(traceback.format_exc())
-        raise
-    yield
+app = FastAPI(title="Library Management API")
+
+
+# --- Startup / Shutdown events ---
+@app.on_event("startup")
+async def on_startup():
+    print("🚀 FastAPI startup event triggered")
+    await connect_db()
+
+
+@app.on_event("shutdown")
+async def on_shutdown():
+    print("🛑 FastAPI shutdown event triggered")
     await disconnect_db()
-    print("🛑 Lifespan: DB disconnected")
 
 
-app = FastAPI(title="Library Management API", lifespan=lifespan)
-
-
-# Middleware
+# --- Middleware ---
 logger_middlewares(app)
 app.add_middleware(
     CORSMiddleware,
@@ -38,16 +34,15 @@ app.add_middleware(
 )
 
 
+# --- Routes ---
 @app.get("/")
 async def root():
     return {"message": "🚀 FastAPI server is running fine"}
-
 
 @app.get("/vercel-log-test")
 async def log_test():
     print("Vercel log test route hit!")
     return {"message": "Vercel logging works!"}
-
 
 app.include_router(auth.router, prefix="/api/vv/auth", tags=["Auth"])
 app.include_router(book.router, prefix="/api/vv/books", tags=["Books"])
