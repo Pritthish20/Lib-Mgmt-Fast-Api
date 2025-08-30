@@ -10,12 +10,22 @@ from app.middlewares.logger import logger_middlewares
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    await connect_db()       # Startup
+    print("Lifespan: Starting DB connection...")
+    try:
+        await connect_db()
+        print("Lifespan: DB connection succeeded.")
+    except Exception as e:
+        print(f"Lifespan: DB connection failed with error: {e}")
+        import traceback
+        print(traceback.format_exc())
+        raise
     yield
-    await disconnect_db()    # Shutdown
+    await disconnect_db()
+    print("Lifespan: DB disconnected")
 
 
 app = FastAPI(title="Library Management API", lifespan=lifespan)
+
 
 # Middleware
 logger_middlewares(app)
@@ -27,10 +37,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 # Test Route
 @app.get("/")
 async def root():
     return {"message": "🚀 FastAPI server is running fine"}
+
 
 # Routes
 app.include_router(auth.router, prefix="/api/vv/auth", tags=["Auth"])
