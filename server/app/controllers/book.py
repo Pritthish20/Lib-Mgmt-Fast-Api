@@ -3,6 +3,7 @@ from beanie import PydanticObjectId
 from app.models.book import Book
 from app.schemas.book import BookCreate, BookUpdate, BookResponse
 from datetime import datetime, timezone
+import traceback
 
 # POST /books/add
 async def add_book(data: BookCreate) -> BookResponse:
@@ -41,8 +42,13 @@ async def delete_book(bookId: str) -> dict:
 
 # GET /books/all-books
 async def all_books() -> list[BookResponse]:
-    books = await Book.find_all().to_list()
-    return [BookResponse.from_model(b).model_dump(by_alias=True) for b in books]
+    try:
+        books = await Book.find_all().to_list()
+        return [BookResponse.from_model(b).model_dump(by_alias=True) for b in books]
+    except Exception as e:
+        print("Error in all_books:", e)
+        print(traceback.format_exc())
+        return {"error": "Internal Server Error"}
 
 
 # GET /books/{bookId}
