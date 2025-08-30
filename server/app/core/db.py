@@ -14,6 +14,7 @@ client: motor.motor_asyncio.AsyncIOMotorClient | None = None
 async def connect_db():
     global client
     try:
+        print("🔌 Connecting to MongoDB...")
         client = motor.motor_asyncio.AsyncIOMotorClient(settings.MONGO_URI)
         db = client[settings.MONGO_DB]
 
@@ -26,6 +27,8 @@ async def connect_db():
 
     except Exception as e:
         print(f"❌ MongoDB Connection Error: {e}")
+        import traceback
+        print(traceback.format_exc())
         raise e
 
 
