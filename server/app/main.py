@@ -13,15 +13,15 @@ async def lifespan(app: FastAPI):
     print("Lifespan: Starting DB connection...")
     try:
         await connect_db()
-        print("Lifespan: DB connection succeeded.")
+        print("✅ Lifespan: DB connection succeeded.")
     except Exception as e:
-        print(f"Lifespan: DB connection failed with error: {e}")
+        print(f"❌ Lifespan: DB connection failed with error: {e}")
         import traceback
         print(traceback.format_exc())
         raise
     yield
     await disconnect_db()
-    print("Lifespan: DB disconnected")
+    print("🛑 Lifespan: DB disconnected")
 
 
 app = FastAPI(title="Library Management API", lifespan=lifespan)
@@ -38,10 +38,10 @@ app.add_middleware(
 )
 
 
-# Test Route
 @app.get("/")
 async def root():
     return {"message": "🚀 FastAPI server is running fine"}
+
 
 @app.get("/vercel-log-test")
 async def log_test():
@@ -49,8 +49,6 @@ async def log_test():
     return {"message": "Vercel logging works!"}
 
 
-
-# Routes
 app.include_router(auth.router, prefix="/api/vv/auth", tags=["Auth"])
 app.include_router(book.router, prefix="/api/vv/books", tags=["Books"])
 app.include_router(transaction.router, prefix="/api/vv/transaction", tags=["Transaction"])
